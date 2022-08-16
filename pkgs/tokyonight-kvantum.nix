@@ -17,6 +17,7 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out/share/Kvantum/TokyoNight
-    cp -a KvArcTokyoNight.{kvconfig,svg} $out/share/Kvantum/TokyoNight
+    cp -a KvArcTokyoNight.kvconfig $out/share/Kvantum/TokyoNight/TokyoNight.kvconfig
+    cp -a KvArcTokyoNight.svg $out/share/Kvantum/TokyoNight/TokyoNight.svg
   '';
 }
