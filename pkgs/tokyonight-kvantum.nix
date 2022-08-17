@@ -20,4 +20,11 @@ stdenv.mkDerivation rec {
     cp -a KvArcTokyoNight.kvconfig $out/share/Kvantum/TokyoNight/TokyoNight.kvconfig
     cp -a KvArcTokyoNight.svg $out/share/Kvantum/TokyoNight/TokyoNight.svg
   '';
+
+  meta = with lib; {
+    description = "TokyoNight theme for the Kvantum engine // Qt5";
+    homepage = "https://gitlab.com/ObsidianChickenz/kvantum-tokyo-night-theme";
+    license = licenses.gpl3;
+    platforms = platforms.all;
+  };
 }

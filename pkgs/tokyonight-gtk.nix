@@ -30,4 +30,11 @@ stdenv.mkDerivation rec {
     mkdir -p $out/share/themes
     cp -a usr/share/themes/TokyoNight $out/share/themes
   '';
+
+  meta = with lib; {
+    description = "TokyoNight theme for GTK+";
+    homepage = "https://github.com/stronk-dev/Tokyo-Night-Linux/";
+    license = licenses.agpl3;
+    platforms = platforms.all;
+  };
 }
