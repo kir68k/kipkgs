@@ -40,7 +40,9 @@
   libdrm,
   mesa,
   libxkbcommon,
+  callPackage,
   commandLineArgs ? "",
+  spotify-adblock ? (callPackage ./spotify-adblock.nix {}),
 }: let
   version = "1.1.84.716.gc5f8b819";
 in
@@ -126,7 +128,7 @@ in
       #  --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
       #  --set-rpath $rpath $out/share/spotify/spotify
 
-      librarypath="${lib.makeLibraryPath buildInputs}:$libdir"
+      librarypath="${lib.makeLibraryPath buildInputs}:${spotify-adblock.out}/lib/spotify-adblock.so:$libdir"
       wrapProgram  $out/share/spotify/spotify \
         ''${gappsWrapperArgs[@]} \
         --prefix LD_LIBRARY_PATH : "$librarypath" \

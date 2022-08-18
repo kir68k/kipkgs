@@ -1,9 +1,10 @@
 {
   lib,
   fetchFromGitHub,
+  callPackage,
   rustPlatform,
   gnumake,
-  spotify-deb,
+  spotify-deb ? (callPackage ./spotify-deb.nix {}),
   makeDesktopItem,
   autoPatchelfHook,
   self,
@@ -32,17 +33,6 @@ rustPlatform.buildRustPackage rec {
     install -D --mode=644 --strip target/x86_64-unknown-linux-gnu/release/libspotifyadblock.so $out/lib/${pname}.so
     install -D --mode=644 config.toml $out/etc/${pname}/config.toml
   '';
-
-  desktopItems = [
-    (makeDesktopItem {
-      name = "spotify-adblock";
-      desktopName = "Spotify (Adblock)";
-      genericName = "Music player";
-      exec = "env LD_LIBRARY_PATH=${spotify-deb}/lib/spotify LD_PRELOAD=${self}/lib/libspotifyadblock.so ${spotify-deb}/bin/spotify %U";
-      terminal = false;
-      categories = ["Audio" "Music" "Player" "AudioVideo"];
-    })
-  ];
 
   meta = with lib; {
     description = "Preloaded library which blocks spotify's ad domains, effectively blocking any ads";
