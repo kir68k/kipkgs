@@ -3,7 +3,7 @@
   fetchFromGitHub,
   rustPlatform,
   gnumake,
-  spotify-unwrapped,
+  spotify-deb,
   makeDesktopItem,
   autoPatchelfHook,
   self,
@@ -38,7 +38,7 @@ rustPlatform.buildRustPackage rec {
       name = "spotify-adblock";
       desktopName = "Spotify (Adblock)";
       genericName = "Music player";
-      exec = "env LD_LIBRARY_PATH=${spotify-unwrapped}/lib/spotify LD_PRELOAD=${self}/lib/libspotifyadblock.so ${spotify-unwrapped}/bin/spotify %U";
+      exec = "env LD_LIBRARY_PATH=${spotify-deb}/lib/spotify LD_PRELOAD=${self}/lib/libspotifyadblock.so ${spotify-deb}/bin/spotify %U";
       terminal = false;
       categories = ["Audio" "Music" "Player" "AudioVideo"];
     })
