@@ -128,9 +128,10 @@ in
       #  --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
       #  --set-rpath $rpath $out/share/spotify/spotify
 
-      librarypath="${lib.makeLibraryPath buildInputs}:${spotify-adblock.out}/lib/spotify-adblock.so:$libdir"
+      librarypath="${lib.makeLibraryPath buildInputs}:$libdir"
       wrapProgram  $out/share/spotify/spotify \
         ''${gappsWrapperArgs[@]} \
+        --prefix LD_PRELOAD : "${spotify-adblock.out}/lib/spotify-adblock.so" \
         --prefix LD_LIBRARY_PATH : "$librarypath" \
         --prefix PATH : "${gnome.zenity}/bin"
 
