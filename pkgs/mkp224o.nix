@@ -1,5 +1,6 @@
 {
   stdenv,
+  lib,
   pkg-config,
   libsodium,
   gnumake,
