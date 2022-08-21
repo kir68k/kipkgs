@@ -33,7 +33,9 @@ stdenv.mkDerivation rec {
     make
   '';
   installPhase = ''
-    cp mkp224o $out
+    mkdir -p $out/bin
+    cp mkp224o $out/bin
+    rm mkp224o
   '';
 
   meta = with lib; {
