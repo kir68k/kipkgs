@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     owner = "ObsidianChickenz";
     repo = "kvantum-tokyo-night-theme";
     rev = "07e50353fdfca491a8b879c97d0c07482621eecc";
-    sha256 = "wYSS2IaIRVxA3fFMlYV6fERNxqpTd5k9npk5FBpgNLY=";
+    sha512 = "1oiWBgoJuhxNOcKUGH+PQ5okE3MJer0ahceiSOn8DMcS76wXUIqILUjCbO3Vp8ShO5/UyEayNeLg1mIThejgYw==";
   };
 
   installPhase = ''
@@ -23,8 +23,8 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     description = "TokyoNight theme for the Kvantum engine // Qt5";
-    homepage = "https://gitlab.com/ObsidianChickenz/kvantum-tokyo-night-theme";
+    homepage = "https://gitlab.com/${src.owner}/${src.repo}/";
     license = licenses.gpl3;
-    platforms = platforms.all;
+    platforms = platforms.unix; # Not for mac but I assume this works fine on *BSD
   };
 }

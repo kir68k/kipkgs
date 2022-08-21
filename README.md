@@ -8,6 +8,8 @@ This is a repository for derivations written by me that aren't in nixpkgs.
     - `tokyonight-kvantum`
         - TokyoNight theme for the Kvantum engine
 - Programs
+    - `mkp244o`
+        - Vanity address generator for Tor v3 Hidden Services
     - `nerdfetch`
         - A POSIX compliant system info script using NerdFonts
     - `spotify-adblock`

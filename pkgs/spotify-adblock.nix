@@ -7,7 +7,7 @@
   spotify-deb ? (callPackage ./spotify-deb.nix {}),
   makeDesktopItem,
   autoPatchelfHook,
-  self,
+  self, # TODO I don't think this is required either
 }:
 rustPlatform.buildRustPackage rec {
   pname = "spotify-adblock";
@@ -17,7 +17,7 @@ rustPlatform.buildRustPackage rec {
     owner = "abba23";
     repo = pname;
     rev = version;
-    sha256 = "YGD3ymBZ2yT3vrcPRS9YXcljGNczJ1vCvAXz/k16r9Y=";
+    sha512 = "+QHTztOjoHJbIKXzmbFmO8BeWzoC0Yr0JcGUrlZQwubumGtiz7Z3qarc/vPjans6bmw0t20hUJrcFZzU+IRXJw==";
   };
 
   cargoSha256 = "28PQ3fsdqc8bWH3XfOW9QxYM/yN5F1lpYx9VpAvlbQA=";
@@ -39,6 +39,6 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/${src.owner}/${pname}";
     license = licenses.gpl3;
     platforms = ["x86_64-linux"];
-    architectures = ["amd64" "x86"];
+    architectures = ["amd64" "x86"]; # TODO remove this?
   };
 }
