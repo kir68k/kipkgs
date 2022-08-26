@@ -6,4 +6,5 @@ with super; rec {
   nerdfetch =           callPackage ./nerdfetch.nix {};
   spotify-adblock =     callPackage ./spotify-adblock.nix {};
   spotify-deb =         callPackage ./spotify-deb.nix {};
+  swww =                callPackage ./swww.nix {};
 }
