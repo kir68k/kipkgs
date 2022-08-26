@@ -18,4 +18,4 @@ This is a repository for derivations written by me that aren't in nixpkgs.
     - `spotify-deb`
         - The Spotify package, but using the debian release instead of Snap, which Nixpkgs uses
     - `swww`
-        ` A Solution to your Wayland Wallpaper Woes. Support for animated wallpapers`
+        - ` A Solution to your Wayland Wallpaper Woes. Support for animated wallpapers`
