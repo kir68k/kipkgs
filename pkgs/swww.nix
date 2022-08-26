@@ -43,7 +43,7 @@ rustPlatform.buildRustPackage rec {
   '';
 
   meta = with lib; {
-    description = "Preloaded library which blocks spotify's ad domains, effectively blocking any ads";
+    description = "A Solution to your Wayland Wallpaper Woes";
     homepage = "https://github.com/${src.owner}/${pname}";
     license = licenses.gpl3;
     platforms = ["x86_64-linux"];
