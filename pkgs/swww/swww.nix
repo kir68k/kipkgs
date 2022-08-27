@@ -18,6 +18,10 @@ rustPlatform.buildRustPackage rec {
     sha512 = "7mesT1Vymh6kOKaXX5x5q8EDEkR/rUNTO5vYDRTnXb3ylwk9bVzWoKBNIoEewb9ZjknGCD9VgPFqwIpLLsiTxw==";
   };
 
+  patches = [
+    ./fix-dpi-scaling.patch
+  ];
+
   cargoSha256 = "MtTKyvq+romp516GYk2p0obhdZjG1+/Cbt42qhaJFxI=";
 
   nativeBuildInputs = [pkg-config rustfmt];
