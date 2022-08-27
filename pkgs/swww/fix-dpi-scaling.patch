@@ -1,14 +1,14 @@
-From 11e51c8f2292c2cb93c8b0e7794bad651304cc7b Mon Sep 17 00:00:00 2001
+From 8120053dcac937a933fb749f28fcdbc1c243d5f7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Leonardo=20Gibrowski=20Fa=C3=A9?= <leonardo.fae44@gmail.com>
 Date: Sat, 27 Aug 2022 00:44:26 -0300
 Subject: [PATCH] fix dpi scaling
 
 ---
- src/daemon/mod.rs | 35 +++++++++++++++++++++++++++++------
- 1 file changed, 29 insertions(+), 6 deletions(-)
+ src/daemon/mod.rs | 37 ++++++++++++++++++++++++++++++-------
+ 1 file changed, 30 insertions(+), 7 deletions(-)
 
 diff --git a/src/daemon/mod.rs b/src/daemon/mod.rs
-index 3147930..e4ce1ce 100644
+index 3147930..6091165 100644
 --- a/src/daemon/mod.rs
 +++ b/src/daemon/mod.rs
 @@ -4,7 +4,7 @@ use simplelog::{ColorChoice, LevelFilter, TermLogger, TerminalMode, ThreadLogMod
@@ -41,7 +41,7 @@ index 3147930..e4ce1ce 100644
      fn new(
          output: &wl_output::WlOutput,
          output_name: String,
-+        physical_size: i32,
++        scale_factor: i32,
          surface: wl_surface::WlSurface,
          layer_shell: &Attached<zwlr_layer_shell_v1::ZwlrLayerShellV1>,
          pool: MemPool,
@@ -49,8 +49,8 @@ index 3147930..e4ce1ce 100644
          // Commit so that the server will send a configure event
          surface.commit();
  
-+        let physical_size = Arc::new(Mutex::new(physical_size));
-+        let ps = Arc::clone(&physical_size);
++        let scale_factor = Arc::new(Mutex::new(scale_factor));
++        let ps = Arc::clone(&scale_factor);
 +        let listener = add_output_listener(output, move |_, info, _| {
 +            if let Ok(mut ps) = ps.lock() {
 +                *ps = info.scale_factor;
@@ -59,7 +59,7 @@ index 3147930..e4ce1ce 100644
 +
          Some(Self {
              surface,
-+            physical_size,
++            physical_size: scale_factor,
              layer_surface,
              next_render_event,
              pool,
@@ -71,21 +71,24 @@ index 3147930..e4ce1ce 100644
          })
      }
  
-@@ -151,8 +165,12 @@ impl Bg {
+@@ -151,10 +165,14 @@ impl Bg {
          match self.next_render_event.take() {
              Some(RenderEvent::Closed) => Some(true),
              Some(RenderEvent::Configure { width, height }) => {
 -                if self.info.dim != (width, height) {
 -                    self.info.dim = (width, height);
-+                let physical_size = match self.physical_size.lock() {
++                let scale_factor = match self.physical_size.lock() {
 +                    Ok(i) => *i as u32,
 +                    Err(_) => 1_u32,
 +                };
-+                if self.info.dim != (width * physical_size, height * physical_size) {
-+                    self.info.dim = (width * physical_size, height * physical_size);
++                if self.info.dim != (width * scale_factor, height * scale_factor) {
++                    self.info.dim = (width * scale_factor, height * scale_factor);
                      self.pool
-                         .resize(width as usize * height as usize * 4)
+-                        .resize(width as usize * height as usize * 4)
++                        .resize(self.info.dim.0 as usize * self.info.dim.1 as usize * 4)
                          .unwrap();
+                     self.clear([0, 0, 0]);
+                     debug!("Configured output: {}", self.info.name);
 @@ -249,8 +267,6 @@ pub fn main() {
          }
      }
