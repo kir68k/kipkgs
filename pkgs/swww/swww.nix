@@ -20,6 +20,7 @@ rustPlatform.buildRustPackage rec {
 
   patches = [
     ./fix-dpi-scaling.patch
+    ./procfs-socket-lookup.patch
   ];
 
   cargoSha256 = "MtTKyvq+romp516GYk2p0obhdZjG1+/Cbt42qhaJFxI=";
